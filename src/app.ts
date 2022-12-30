@@ -7,6 +7,12 @@ const connectionString = process.env.DATABASE_URL || '';
 const connection = mysql.createConnection(connectionString);
 connection.connect();
 
+app.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'OPTIONS, GET, POST, PUT, PATCH, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    next();
+})
 
 app.get('/api/characters', (req : Request, res : Response) => {
     const query = `SELECT * FROM Characters`;
